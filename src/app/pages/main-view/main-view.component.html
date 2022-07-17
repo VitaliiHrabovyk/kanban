@@ -1,0 +1,75 @@
+<div class="container">
+
+    <nav class="navbar is-success" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <h1 class="navbar-item title app-name">KanBan</h1>
+        </div>
+
+
+    </nav>
+
+    <div class="board-wraper">
+        <div class="columns is-mobile">
+            <div class="column" cdkDropList #ideasList="cdkDropList" [cdkDropListData]="ideas"
+            [cdkDropListConnectedTo]="[ideasList, reserchList, toDoList, doneList, trashList]"  (cdkDropListDropped)="drop($event)">
+                <h2 class="title">Ideas</h2>
+                <span id="addButton" (click)="addToggle = !addToggle" class="material-symbols-outlined">add_circle</span>
+
+                    <form [formGroup]="form" (ngSubmit)="submit()">
+                        <div class="field is-grouped" *ngIf="addToggle">
+                        <p class="control is-expanded">
+                            <input class="input" type="text" placeholder="Add new idea" formControlName="idea">
+                          </p>
+                          <button class="button is-success" type="submit" [disabled]="form.invalid">Add</button>
+                        </div>
+                    </form>
+
+                
+                <div class="task-container" >
+                    <div class="task" *ngFor="let item of ideas" cdkDrag>{{item}}</div>
+                </div>
+            </div>
+
+            <div class="column" cdkDropList #reserchList="cdkDropList" [cdkDropListData]="reserch"
+            [cdkDropListConnectedTo]="[ideasList, reserchList, toDoList, doneList, trashList]"  (cdkDropListDropped)="drop($event)">
+                <h2 class="title">Reserch</h2>
+                <div class="task-container">
+                    <div class="task" *ngFor="let item of reserch " cdkDrag>{{item}}</div>
+                </div>
+            </div>
+
+            <div class="column" cdkDropList #toDoList="cdkDropList" [cdkDropListData]="todo"
+            [cdkDropListConnectedTo]="[ideasList, reserchList, toDoList, doneList, trashList]"  (cdkDropListDropped)="drop($event)">
+                <div class="task-container" >
+                    <h2 class="title">To Do</h2>
+                    <div class="task" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+                </div>
+
+            </div>
+
+            <div class="column" cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+            [cdkDropListConnectedTo]="[ideasList, reserchList, toDoList, doneList,trashList]" (cdkDropListDropped)="drop($event)">
+                <div class="task-container" >
+                    <h2 class="title">Done</h2>
+                    <div class="task" *ngFor="let item of done" cdkDrag>{{item}}</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="columns is-mobile">
+            <div class="column is-half is-offset-one-quarter" id="trash" cdkDropList #trashList="cdkDropList" [cdkDropListData]="trash"
+            [cdkDropListConnectedTo]="[ideasList, reserchList, toDoList, doneList]" (cdkDropListDropped)="drop($event)">
+                <div class="task-container" >
+                    <span id="trashIcon" class="material-symbols-outlined">delete</span>
+                    <div [@fadeAway]="trash.length ? 'unvisible' : 'visible'" id="fadeAway">
+                        <div class="trash" *ngFor="let item of trash" cdkDrag>{{item}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
