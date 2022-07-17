@@ -2,7 +2,7 @@ export class Board{
 
     constructor(
         public ideas:string[],
-        public reserch:string[],
+        public research:string[],
         public todo: string[],
         public done:string[],
     ){}

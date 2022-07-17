@@ -25,7 +25,7 @@ import {
         width: "10px"
       })),
       transition('visible => unvisible', [
-        animate('1s')
+        animate('0.5s')
       ]),
     ]),
   ],
@@ -49,7 +49,7 @@ export class MainViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup ({
-      idea: new FormControl(null, [Validators.required, Validators.minLength(5)])
+      idea: new FormControl(null, [Validators.required, Validators.minLength(3)])
     })
     
     this.fbService.getFromFireBase().subscribe(res => {
@@ -60,9 +60,9 @@ export class MainViewComponent implements OnInit {
           this.ideas.push(element)
         });
       }
-      if(this.boardFromFireBase$.reserch){
-        this.boardFromFireBase$.reserch.forEach((element:string) => {
-          this.reserch.push(element)
+      if(this.boardFromFireBase$.research){
+        this.boardFromFireBase$.research.forEach((element:string) => {
+          this.research.push(element)
         });
       }
       if(this.boardFromFireBase$.todo){
@@ -81,14 +81,14 @@ export class MainViewComponent implements OnInit {
   }
 
   ideas:string[] = [];
-  reserch:string[]= [];
+  research:string[]= [];
   todo: string[] = [];
   done:string[] = [];
   trash:string[] = [];
 
   board:Board = {
     ideas: this.ideas,
-    reserch: this.reserch,
+    research: this.research,
     todo: this.todo,
     done: this.done
   }
